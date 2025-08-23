@@ -36,6 +36,7 @@ pub mod ffi {
         fn Init(self: Pin<&mut B1LocoClient>);
 
         fn b1_loco_client_new() -> UniquePtr<B1LocoClient>;
+        fn segfault2go();
     }
 }
 
