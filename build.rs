@@ -1,5 +1,5 @@
 fn main() {
-    let mut bridge = cxx_build::bridge("src/lib.rs");
+    let mut bridge = cxx_build::bridges(["src/robot.rs", "src/robot/b1.rs"]);
 
     bridge
         .cpp(true)
