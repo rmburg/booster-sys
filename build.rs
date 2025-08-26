@@ -2,12 +2,13 @@ fn main() {
     let mut bridge = cxx_build::bridge("src/lib.rs");
 
     bridge
-        .flag_if_supported("-std=c++17")
-        .file("src/cpp/shim/b1_loco_client.cpp")
-        .include("src/cpp")
+        .cpp(true)
+        .std("c++17")
+        .flag("-Wno-reorder") // Suppress warnings about field ordering we can't fix
+        .include("include")
         .include("booster_robotics_sdk/include")
         .include("booster_robotics_sdk/third_party/include")
-        .compile("booster_sys");
+        .compile("wrapper");
 
     // Link your precompiled static library
     println!("cargo::rerun-if-changed=src/lib.rs");

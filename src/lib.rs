@@ -21,8 +21,7 @@ pub mod ffi {
 
     unsafe extern "C++" {
         include!("booster/robot/b1/b1_loco_client.hpp");
-        include!("booster/robot/b1/b1_loco_client.hpp");
-        include!("shim/b1_loco_client.hpp");
+        include!("wrapper.hpp");
 
         type B1LocoClient;
         type LocoApiId;
@@ -35,6 +34,8 @@ pub mod ffi {
 
         fn Init(self: Pin<&mut B1LocoClient>);
 
+        #[namespace = ""]
+        #[cxx_name = "construct_unique"]
         fn b1_loco_client_new() -> UniquePtr<B1LocoClient>;
     }
 }
