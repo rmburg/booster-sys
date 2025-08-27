@@ -1,4 +1,4 @@
-#[cxx::bridge(namespace = "booster::robot::b1")]
+#[cxx::bridge]
 pub mod ffi {
     #[repr(u32)]
     enum LocoApiId {
@@ -20,11 +20,15 @@ pub mod ffi {
     }
 
     unsafe extern "C++" {
-        include!("booster/robot/b1/b1_loco_client.hpp");
         include!("wrapper.hpp");
 
         type B1LocoClient;
         type LocoApiId;
+
+        #[cxx_name = "construct_unique"]
+        fn b1_loco_client_new() -> UniquePtr<B1LocoClient>;
+
+        fn Init(self: Pin<&mut B1LocoClient>);
 
         fn SendApiRequest(
             self: Pin<&mut B1LocoClient>,
@@ -32,11 +36,7 @@ pub mod ffi {
             param: &CxxString,
         ) -> i32;
 
-        fn Init(self: Pin<&mut B1LocoClient>);
 
-        #[namespace = ""]
-        #[cxx_name = "construct_unique"]
-        fn b1_loco_client_new() -> UniquePtr<B1LocoClient>;
     }
 }
 
@@ -52,7 +52,7 @@ mod tests {
     fn api_call() {
         let_cxx_string!(network_interface = "127.0.0.1");
         init_channel_factory(&network_interface);
-    
+
         let api_id = LocoApiId::kWaveHand;
         let_cxx_string!(param = "");
         let mut client = b1_loco_client_new();
