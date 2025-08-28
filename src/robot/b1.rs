@@ -55,6 +55,10 @@ pub mod ffi {
         fn RotateHead(self: Pin<&mut B1LocoClient>, pitch: f32, yaw: f32) -> i32;
 
         fn WaveHand(self: Pin<&mut B1LocoClient>, action: HandAction) -> i32;
+
+        fn LieDown(self: Pin<&mut B1LocoClient>) -> i32;
+
+        fn GetUp(self: Pin<&mut B1LocoClient>) -> i32;
     }
 }
 
