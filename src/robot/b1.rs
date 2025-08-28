@@ -24,6 +24,9 @@ pub mod ffi {
     unsafe extern "C++" {
         include!("wrapper.hpp");
 
+        type RobotMode = crate::robot::common::ffi::RobotMode;
+        type HandAction = crate::robot::b1::api_const::ffi::HandAction;
+
         type B1LocoClient;
         type LocoApiId;
 
@@ -38,7 +41,20 @@ pub mod ffi {
             param: &CxxString,
         ) -> i32;
 
+        // fn SendApiRequestWithResponse(
+        //     self: Pin<&mut B1LocoClient>,
+        //     api_id: LocoApiId,
+        //     param: &CxxString,
+        //     response: &mut Response,
+        // ) -> i32;
 
+        fn ChangeMode(self: Pin<&mut B1LocoClient>, mode: RobotMode) -> i32;
+
+        fn Move(self: Pin<&mut B1LocoClient>, vx: f32, vy: f32, vyaw: f32) -> i32;
+
+        fn RotateHead(self: Pin<&mut B1LocoClient>, pitch: f32, yaw: f32) -> i32;
+
+        fn WaveHand(self: Pin<&mut B1LocoClient>, action: HandAction) -> i32;
     }
 }
 
