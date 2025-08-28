@@ -1,6 +1,8 @@
+pub mod api_const;
+
 #[cxx::bridge]
 pub mod ffi {
-    #[repr(u32)]
+    #[repr(i32)]
     enum LocoApiId {
         kChangeMode = 2000,
         kMove = 2001,
